@@ -8,5 +8,6 @@
 
 data = [123, "apple", "banana", "cat", 456, "mango", "elephant"]
 
-ab_jsj = filter(str.upper,data)
-print(list(ab_jsj))
+words = filter(lambda a: isinstance(item,str) and len(a)>5,)
+
+print(list(words))
