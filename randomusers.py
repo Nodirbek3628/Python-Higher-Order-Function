@@ -1,3 +1,5 @@
+
+
 randomuser_data = {
     "results": [
         {
@@ -569,7 +571,6 @@ randomuser_data = {
     }
 }
 
-
 def get_full_names(data: dict) -> list[str]:
     """
     Returns a list of users' full names in 'First Last' format.
@@ -580,7 +581,10 @@ def get_full_names(data: dict) -> list[str]:
     Returns:
         list[str]: List of full names.
     """
-    pass
+    words = randomuser_data["results"]
+    a = filter(lambda word:word["name"]["first"] and word["name"]["last"],words)
+
+    return list(a)
 
 
 def get_users_by_country(data: dict, country: str) -> list[dict]:
@@ -594,7 +598,11 @@ def get_users_by_country(data: dict, country: str) -> list[dict]:
     Returns:
         list[dict]: List of dictionaries containing full name and email of matching users.
     """
-    pass
+
+    words = randomuser_data["results"]
+
+    a = filter(lambda user:user["location"]["country"] == "India",words)
+    return list(a)
 
 
 def count_users_by_gender(data: dict) -> dict:
@@ -607,7 +615,10 @@ def count_users_by_gender(data: dict) -> dict:
     Returns:
         dict: Dictionary with gender as keys and count as values.
     """
-    pass
+    gender_male = list(filter(lambda x: x["gender"]=="male",data["results"]))
+    gender_female = list(filter(lambda x: x["gender"] == "female",data["results"]))
+    
+    return {"male": len(gender_male), "female": len(gender_female)}
 
 
 def get_emails_of_older_than(data: dict, age: int) -> list[str]:
@@ -621,7 +632,10 @@ def get_emails_of_older_than(data: dict, age: int) -> list[str]:
     Returns:
         list[str]: List of email addresses.
     """
-    pass
+     
+    age_shart = filter(lambda x:x["dob"]["age"] >= age,data["results"])
+    
+    return list(map(lambda x:x["email"],age_shart))
 
 
 def sort_users_by_age(data: dict, descending: bool = False) -> list[dict]:
@@ -635,7 +649,16 @@ def sort_users_by_age(data: dict, descending: bool = False) -> list[dict]:
     Returns:
         list[dict]: List of users with name and age sorted accordingly.
     """
-    pass
+    last_name = sorted(lambda x: x ["name"]["last"])
+    first_name = sorted(lambda x:x["name"]["first"])
+    by_age = sorted(lambda x:x["dob"]["age"],descending=True)
+    full_name = f"name:{last_name,first_name},age:{by_age}"
+    return list(full_name)
+    
+
+    
+
+    
 
 
 def get_usernames_starting_with(data: dict, letter: str) -> list[str]:
@@ -736,7 +759,7 @@ def run_functions() -> None:
     """
     Runs and prints results of all data processing functions for demonstration purposes.
     """
-    print("Full Names:", get_full_names(randomuser_data))
+    print( sort_users_by_age(randomuser_data,descending=True))
 
 
 run_functions()
